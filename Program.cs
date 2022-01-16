@@ -32,6 +32,8 @@ namespace Lab2
             text[17] = "390bcfac282f558a03b9df9dedcc43425244d268c0cfa61602918cbd848481bf3c5c1c47db7c660c63";
             text[18] = "2f0cdfe464344e8650edc59daac3504b1710d56b89dce5011e8c90f6";
             var bytes = text.Select(s => Convert_by16(s)).ToArray();
+            key =" ";
+             Decoded(bytes, key);
 
         }
 
@@ -49,5 +51,32 @@ namespace Lab2
 
             return bytes;
         }
-    } 
+
+        public static void Decoded(byte[][] msg, string key)
+        {
+            var bestText = new List<string>();
+
+            for (int i = 0; i < msg.Length; i++)
+            {
+                if (i == 6) { continue; }
+                if (i == 0) { i = 6; }
+                List<string> currentText = new List<string>();
+                for (int j = 0; j < msg.Length; j++)
+                {
+                    int length = Math.Min(msg[i].Length, msg[j].Length);// рівняємо по мінімальній довжині 
+                    byte[] mas1, mas2;
+
+                    mas1 = msg[i].Take(length).ToArray(); //відділяємо строчку по мінімальній довжині
+                    mas2 = msg[j].Take(length).ToArray();
+
+                }
+
+
+
+            }
+        }
+
+    }
 }
+        
+
