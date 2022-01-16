@@ -32,7 +32,8 @@ namespace Lab2
             text[17] = "390bcfac282f558a03b9df9dedcc43425244d268c0cfa61602918cbd848481bf3c5c1c47db7c660c63";
             text[18] = "2f0cdfe464344e8650edc59daac3504b1710d56b89dce5011e8c90f6";
             var bytes = text.Select(s => Convert_by16(s)).ToArray();
-            key =" ";
+            key ="With a bare bodkin? Who would fardels bear,";
+                       // For who would bear the whips and scorns of time.
              Decoded(bytes, key);
 
         }
@@ -69,11 +70,31 @@ namespace Lab2
                     mas1 = msg[i].Take(length).ToArray(); //відділяємо строчку по мінімальній довжині
                     mas2 = msg[j].Take(length).ToArray();
 
+                    var xor = XorBytes(mas1, mas2); // получаємо М1 xor M2
+
+                    var result = XorBytes(xor, Encoding.UTF8.GetBytes(key));
+
+                    var strResult = Encoding.UTF8.GetString(result);
+
+                    currentText.Add(strResult);
+
+                    Console.WriteLine("I: " + i + "  J: " + j + " |||===|||  " + strResult);
+                    Console.ReadKey();
                 }
-
-
+                Console.WriteLine();
+                if (i == 6) { i = 1; }
 
             }
+        }
+
+        static byte[] XorBytes(byte[] msg, byte[] key)
+        {
+            var result = new byte[msg.Length];
+            for (int i = 0; i < msg.Length; i++)
+            {
+                result[i] = (byte)(msg[i] ^ key[i % key.Length]);
+            }
+            return result;
         }
 
     }
